@@ -1,6 +1,5 @@
 from flask import Flask, request
 from flask_restful import Api,Resource,reqparse, abort, fields, marshal_with
-import requests
 
 app = Flask(__name__)
 api = Api(app)
@@ -29,16 +28,15 @@ class indexFiles(Resource):
     
     def get(self):
         fileName = request.args.get('fileName')
-        print(fileName)
-        print(data)
         filtered_objects = [obj for obj in data if obj['fileName'] == fileName]
-        totalBlocks = filtered_objects[0]['totalBlocks']
+        if filtered_objects:
+            totalBlocks = filtered_objects[0]['totalBlocks']
 
-        filtered_objects = filtered_objects[:totalBlocks]
-        print(len(filtered_objects))
-        print(totalBlocks)
+            filtered_objects = filtered_objects[:totalBlocks]
 
-        return {"files": filtered_objects}
+            return {"files": filtered_objects}
+        else:
+            return {"files": []}
     
 api.add_resource(indexFiles, "/indexFiles")
 
