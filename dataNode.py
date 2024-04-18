@@ -10,7 +10,7 @@ dataNode_ip = int(sys.argv[1])
 
 filesBlocks = []
 rabbitmq_port = 5672 
-rabbitmq_ip = 'localhost'
+rabbitmq_ip = '3.226.23.240'
 
 def callback(ch, method, properties, body):
     headers = properties.content_type.split(",")
@@ -20,7 +20,7 @@ def callback(ch, method, properties, body):
         'blockContent': body
     }
     filesBlocks.append(fileBlockInfo)
-
+    print("Fragment added to filesBlocks","Nombre Archivo:",fileBlockInfo['fileName'],"Numero Fragmento; ", fileBlockInfo['blockPosition'])
     url = server + 'indexFiles' 
     indexFilesFields = {
         'fileName': headers[0],
@@ -64,8 +64,7 @@ def server_thread(ip, port):
 
 
 def main():
-    ip = '127.0.0.1' 
-    server_thread_obj = threading.Thread(target=server_thread, args=(ip, dataNode_ip))
+    server_thread_obj = threading.Thread(target=server_thread, args=(dataNode_ip, 80))
     server_thread_obj.start()
 
     consume_messages()

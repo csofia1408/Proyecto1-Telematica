@@ -10,7 +10,10 @@ server = input("Enter server url: ")
 
 resultFile = []
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+rabbitmq_port = 5672 
+rabbitmq_ip = '3.226.23.240'
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitmq_ip,rabbitmq_port))
 channel = connection.channel()
 
 channel.queue_declare(queue='queue')
@@ -148,7 +151,7 @@ while True:
             if len(responseContent['files']) > 0:
                 for fragment in responseContent['files']:
                     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    client_socket.connect(('127.0.0.1', int(fragment['dataNodeIp'])))
+                    client_socket.connect((int(fragment['dataNodeIp']), 80))
                     message = {
                         'fileName': fragment['fileName'], 
                         'blockPosition': fragment['blockPosition'],
