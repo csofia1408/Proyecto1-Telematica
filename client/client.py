@@ -11,7 +11,7 @@ server = input("Enter server url: ")
 resultFile = []
 
 rabbitmq_port = 5672 
-rabbitmq_ip = '3.226.23.240'
+rabbitmq_ip = '18.218.75.253'
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitmq_ip,rabbitmq_port))
 channel = connection.channel()

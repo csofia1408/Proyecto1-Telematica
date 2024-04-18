@@ -10,7 +10,7 @@ dataNode_ip = int(sys.argv[1])
 
 filesBlocks = []
 rabbitmq_port = 5672 
-rabbitmq_ip = '3.226.23.240'
+rabbitmq_ip = '18.218.75.253'
 
 def callback(ch, method, properties, body):
     headers = properties.content_type.split(",")
